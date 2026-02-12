@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finance Ledger Dashboard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
     <div class="app-container">
         <!-- Sidebar -->
@@ -49,8 +53,25 @@
             <div class="dashboard-grid">
                 <!-- Net Worth Graph -->
                 <div class="card net-worth-card">
-                    <h3>Net Worth</h3>
-                    <div class="chart-container">
+                    <div class="card-header">
+                        <div class="header-info">
+                            <h3>Net Worth</h3>
+                            <div class="net-worth-stats">
+                                <span class="nw-value" id="nwValue">$1,162,500.32</span>
+                                <div class="nw-change positive">
+                                    <span class="material-icons">trending_up</span>
+                                    <span id="nwChangeValue">$22,039.65</span>
+                                    <span id="nwChangePercent">(1.2%)</span>
+                                </div>
+                                <span class="time-period-label">this month</span>
+                            </div>
+                        </div>
+                        <div class="chart-controls">
+                            <button class="toggle-btn active" data-period="monthly">Monthly</button>
+                            <button class="toggle-btn" data-period="annual">Annual</button>
+                        </div>
+                    </div>
+                    <div class="chart-container large">
                         <canvas id="netWorthChart"></canvas>
                     </div>
                 </div>
@@ -88,11 +109,11 @@
                     <h3>Cash Flow</h3>
                     <div class="chart-container">
                         <!-- Placeholder for Sankey/Flow viz since Chart.js sankey is a plugin -->
-                         <div class="cashflow-placeholder">
-                             <div class="flow-node income">Income</div>
-                             <div class="flow-arrow"></div>
-                             <div class="flow-node expenses">Expenses / Savings</div>
-                         </div>
+                        <div class="cashflow-placeholder">
+                            <div class="flow-node income">Income</div>
+                            <div class="flow-arrow"></div>
+                            <div class="flow-node expenses">Expenses / Savings</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -100,4 +121,5 @@
     </div>
     <script src="js/app.js"></script>
 </body>
+
 </html>
