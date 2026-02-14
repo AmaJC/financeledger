@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accounts - FinanceLedger</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=1.1">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>FinanceLedger</h2>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html" class="nav-item">
+                    <span class="icon">dashboard</span>
+                    Dashboard
+                </a>
+                <a href="accounts.html" class="nav-item active">
+                    <span class="icon">account_balance</span>
+                    Accounts
+                </a>
+                <a href="transactions.html" class="nav-item">
+                    <span class="icon">receipt_long</span>
+                    Transactions
+                </a>
+                <a href="cashflow.html" class="nav-item">
+                    <span class="icon">sync_alt</span>
+                    Cash Flow
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-bar">
+                <h1>Accounts</h1>
+                <div class="user-profile">
+                    <span class="user-name">Welcome back</span>
+                </div>
+            </header>
+
+            <div class="dashboard-grid">
+                <!-- Checking Account -->
+                <div class="card account-card">
+                    <div class="card-header">
+                        <div class="header-info">
+                            <h3>Main Checking</h3>
+                            <span class="account-number">**** 4589</span>
+                        </div>
+                        <span class="material-icons account-icon">account_balance_wallet</span>
+                    </div>
+                    <div class="account-balance">
+                        <span class="currency">$</span>
+                        <span class="amount">12,450.32</span>
+                    </div>
+                    <div class="account-footer">
+                        <span class="text-success">+ $2,450.00 this month</span>
+                    </div>
+                </div>
+
+                <!-- Savings Account -->
+                <div class="card account-card">
+                    <div class="card-header">
+                        <div class="header-info">
+                            <h3>High Yield Savings</h3>
+                            <span class="account-number">**** 9921</span>
+                        </div>
+                        <span class="material-icons account-icon">savings</span>
+                    </div>
+                    <div class="account-balance">
+                        <span class="currency">$</span>
+                        <span class="amount">45,100.50</span>
+                    </div>
+                    <div class="account-footer">
+                        <span class="text-success">+ $150.00 interest</span>
+                    </div>
+                </div>
+
+                <!-- Investment Account -->
+                <div class="card account-card">
+                    <div class="card-header">
+                        <div class="header-info">
+                            <h3>Investment Portfolio</h3>
+                            <span class="account-number">**** 3321</span>
+                        </div>
+                        <span class="material-icons account-icon">trending_up</span>
+                    </div>
+                    <div class="account-balance">
+                        <span class="currency">$</span>
+                        <span class="amount">1,102,450.00</span>
+                    </div>
+                    <div class="account-footer">
+                        <span class="text-success">+ 4.2% YTD</span>
+                    </div>
+                </div>
+
+                <!-- Credit Card -->
+                <div class="card account-card">
+                    <div class="card-header">
+                        <div class="header-info">
+                            <h3>Sapphire Reserve</h3>
+                            <span class="account-number">**** 1102</span>
+                        </div>
+                        <span class="material-icons account-icon">credit_card</span>
+                    </div>
+                    <div class="account-balance">
+                        <span class="currency">$</span>
+                        <span class="amount negative">2,450.12</span>
+                    </div>
+                    <div class="account-footer">
+                        <span class="text-secondary">Due: Oct 25</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

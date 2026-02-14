@@ -9,7 +9,9 @@
     --border-color: rgba(255, 255, 255, 0.1);
     --success-color: #4ade80;
     --danger-color: #f87171;
-    --font-family: 'Plus Jakarta Sans', sans-serif;
+    --font-family: 'Outfit', sans-serif;
+    --gradient-primary: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+    --gradient-text: linear-gradient(135deg, #38bdf8 0%, #c084fc 100%);
 }
 
 * {
@@ -22,6 +24,9 @@ body {
     font-family: var(--font-family);
     background-color: var(--bg-color);
     color: var(--text-primary);
+    background-image:
+        radial-gradient(circle at 10% 20%, rgba(56, 189, 248, 0.1) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(192, 132, 252, 0.1) 0%, transparent 20%);
     height: 100vh;
     overflow: hidden;
 }
@@ -45,7 +50,10 @@ body {
 .logo h2 {
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--accent-color);
+    background: var(--gradient-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
     margin-bottom: 3rem;
     letter-spacing: -0.025em;
 }
@@ -325,4 +333,64 @@ body {
     .dashboard-grid {
         grid-template-columns: 1fr;
     }
+}
+
+/* Account Cards */
+.account-card .card-header {
+    margin-bottom: 2rem;
+    align-items: center;
+}
+
+.account-number {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.05em;
+}
+
+.account-icon {
+    font-size: 2rem;
+    color: var(--accent-color);
+    background: rgba(56, 189, 248, 0.1);
+    padding: 0.5rem;
+    border-radius: 50%;
+}
+
+.account-balance {
+    margin-bottom: 1.5rem;
+}
+
+.account-balance .currency {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    vertical-align: top;
+    margin-right: 0.25rem;
+}
+
+.account-balance .amount {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.account-balance .amount.negative {
+    color: var(--text-primary);
+    /* Keep white for negative balance on dashboard usually, or red if debt? */
+}
+
+.account-footer {
+    border-top: 1px solid var(--border-color);
+    padding-top: 1rem;
+    font-size: 0.875rem;
+}
+
+.text-success {
+    color: var(--success-color);
+}
+
+.text-danger {
+    color: var(--danger-color);
+}
+
+.text-secondary {
+    color: var(--text-secondary);
 }

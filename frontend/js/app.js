@@ -12,7 +12,7 @@ function initCharts() {
             legend: {
                 labels: {
                     color: '#94a3b8',
-                    font: { family: 'Plus Jakarta Sans' }
+                    font: { family: 'Outfit' }
                 }
             }
         },

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transactions - FinanceLedger</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=1.1">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>FinanceLedger</h2>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html" class="nav-item">
+                    <span class="icon">dashboard</span>
+                    Dashboard
+                </a>
+                <a href="accounts.html" class="nav-item">
+                    <span class="icon">account_balance</span>
+                    Accounts
+                </a>
+                <a href="transactions.html" class="nav-item active">
+                    <span class="icon">receipt_long</span>
+                    Transactions
+                </a>
+                <a href="cashflow.html" class="nav-item">
+                    <span class="icon">sync_alt</span>
+                    Cash Flow
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-bar">
+                <h1>Transactions</h1>
+                <div class="user-profile">
+                    <span class="user-name">Welcome back</span>
+                </div>
+            </header>
+
+            <div class="card transactions-card" style="grid-column: span 2;"> <!-- Force full width -->
+                <div class="card-header">
+                    <h3>All Transactions</h3>
+                    <!-- Filter Placeholder -->
+                    <div class="filters">
+                        <button class="toggle-btn active">All</button>
+                        <button class="toggle-btn">Income</button>
+                        <button class="toggle-btn">Expense</button>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table class="transactions-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Description</th>
+                                <th>Category</th>
+                                <th>Amount</th>
+                                <th>Account</th>
+                            </tr>
+                        </thead>
+                        <tbody id="fullTransactionsBody">
+                            <!-- Populated by JS - duplicate logic or refactor? 
+                                 For now, I'll put static data or reuse the JS if I refactor it.
+                                 Let's put static data for the mock since app.js targets #transactionsBody
+                            -->
+                            <tr>
+                                <td>2023-10-25</td>
+                                <td>Whole Foods Market</td>
+                                <td><span class="category-badge">Groceries</span></td>
+                                <td class="amount-negative">-$64.20</td>
+                                <td>Checking</td>
+                            </tr>
+                            <tr>
+                                <td>2023-10-24</td>
+                                <td>Uber Ride</td>
+                                <td><span class="category-badge">Transport</span></td>
+                                <td class="amount-negative">-$18.50</td>
+                                <td>Sapphire</td>
+                            </tr>
+                            <tr>
+                                <td>2023-10-24</td>
+                                <td>Tech Consulting Inc</td>
+                                <td><span class="category-badge">Income</span></td>
+                                <td class="amount-positive">+$4,500.00</td>
+                                <td>Checking</td>
+                            </tr>
+                            <tr>
+                                <td>2023-10-23</td>
+                                <td>Netflix Subscription</td>
+                                <td><span class="category-badge">Entertainment</span></td>
+                                <td class="amount-negative">-$15.99</td>
+                                <td>Checking</td>
+                            </tr>
+                            <tr>
+                                <td>2023-10-22</td>
+                                <td>Shell Station</td>
+                                <td><span class="category-badge">Transport</span></td>
+                                <td class="amount-negative">-$45.00</td>
+                                <td>Sapphire</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

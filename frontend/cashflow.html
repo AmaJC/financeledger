@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cash Flow - FinanceLedger</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=1.1">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>FinanceLedger</h2>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html" class="nav-item">
+                    <span class="icon">dashboard</span>
+                    Dashboard
+                </a>
+                <a href="accounts.html" class="nav-item">
+                    <span class="icon">account_balance</span>
+                    Accounts
+                </a>
+                <a href="transactions.html" class="nav-item">
+                    <span class="icon">receipt_long</span>
+                    Transactions
+                </a>
+                <a href="cashflow.html" class="nav-item active">
+                    <span class="icon">sync_alt</span>
+                    Cash Flow
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-bar">
+                <h1>Cash Flow Analysis</h1>
+                <div class="user-profile">
+                    <span class="user-name">Welcome back</span>
+                </div>
+            </header>
+
+            <div class="dashboard-grid">
+                <div class="card" style="grid-column: span 2; min-height: 500px;">
+                    <div class="card-header">
+                        <h3>Monthly Inflow vs Outflow</h3>
+                        <div class="chart-controls">
+                            <button class="toggle-btn active">Oct 2023</button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <!-- Advanced Visualization Placeholder -->
+                        <div class="cashflow-placeholder" style="flex-direction: column; gap: 2rem;">
+                            <div style="display: flex; width: 100%; justify-content: space-around;">
+                                <div class="flow-node income"
+                                    style="background: rgba(74, 222, 128, 0.1); border-color: var(--success-color);">
+                                    Income: $12,500
+                                </div>
+                            </div>
+                            <div class="flow-arrow"
+                                style="transform: rotate(90deg); width: 2px; height: 50px; margin: 0;"></div>
+                            <div style="display: flex; width: 100%; justify-content: space-around; gap: 2rem;">
+                                <div class="flow-node" style="border-color: var(--accent-color);">Suggested Savings:
+                                    $4,500</div>
+                                <div class="flow-node" style="border-color: var(--danger-color);">Expenses: $8,000</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>
