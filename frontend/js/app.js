@@ -1,7 +1,74 @@
 document.addEventListener('DOMContentLoaded', () => {
     initCharts();
+    initCashFlowSankey();
     loadTransactions();
 });
+
+function initCashFlowSankey() {
+    const chartDom = document.getElementById('sankeyChart');
+    if (!chartDom) return;
+
+    const myChart = echarts.init(chartDom, 'dark', {
+        renderer: 'canvas',
+        useDirtyRect: false
+    });
+
+    const option = {
+        backgroundColor: 'transparent',
+        tooltip: {
+            trigger: 'item',
+            triggerOn: 'mousemove'
+        },
+        series: [{
+            type: 'sankey',
+            layout: 'none',
+            emphasis: {
+                focus: 'adjacency'
+            },
+            data: [
+                { name: 'Salary' },
+                { name: 'Freelance' },
+                { name: 'Dividends' },
+                { name: 'Total Income' },
+                { name: 'Rent' },
+                { name: 'Groceries' },
+                { name: 'Dining' },
+                { name: 'Transport' },
+                { name: 'Utilities' },
+                { name: 'Savings' },
+                { name: 'Investments' }
+            ],
+            links: [
+                // Income Sources -> Total Income
+                { source: 'Salary', target: 'Total Income', value: 8500 },
+                { source: 'Freelance', target: 'Total Income', value: 3200 },
+                { source: 'Dividends', target: 'Total Income', value: 800 },
+
+                // Total Income -> Expenses/Savings
+                { source: 'Total Income', target: 'Rent', value: 2500 },
+                { source: 'Total Income', target: 'Groceries', value: 600 },
+                { source: 'Total Income', target: 'Dining', value: 400 },
+                { source: 'Total Income', target: 'Transport', value: 300 },
+                { source: 'Total Income', target: 'Utilities', value: 200 },
+                { source: 'Total Income', target: 'Savings', value: 4500 },
+                { source: 'Total Income', target: 'Investments', value: 4000 }
+            ],
+            lineStyle: {
+                color: 'gradient',
+                curveness: 0.5
+            },
+            label: {
+                color: '#e2e8f0',
+                fontFamily: 'Outfit',
+                fontSize: 14
+            }
+        }]
+    };
+
+    myChart.setOption(option);
+
+    window.addEventListener('resize', myChart.resize);
+}
 
 function initCharts() {
     // Shared Chart Options for Dark Theme
@@ -47,131 +114,126 @@ function initCharts() {
     };
 
     // Net Worth Chart
-    const netWorthCtx = document.getElementById('netWorthChart').getContext('2d');
+    const netWorthCanvas = document.getElementById('netWorthChart');
+    if (netWorthCanvas) {
+        const netWorthCtx = netWorthCanvas.getContext('2d');
+        // Create gradient
+        const gradient = netWorthCtx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, 'rgba(56, 189, 248, 0.2)');
+        gradient.addColorStop(1, 'rgba(56, 189, 248, 0)');
 
-    // Create gradient
-    const gradient = netWorthCtx.createLinearGradient(0, 0, 0, 400);
-    gradient.addColorStop(0, 'rgba(56, 189, 248, 0.2)');
-    gradient.addColorStop(1, 'rgba(56, 189, 248, 0)');
-
-    const netWorthChart = new Chart(netWorthCtx, {
-        type: 'line',
-        data: {
-            labels: nwData.monthly.labels,
-            datasets: [{
-                label: 'Net Worth',
-                data: nwData.monthly.data,
-                borderColor: '#38bdf8',
-                backgroundColor: gradient,
-                borderWidth: 3,
-                tension: 0.4,
-                fill: true,
-                pointBackgroundColor: '#0f172a',
-                pointBorderWidth: 2,
-                pointRadius: 4,
-                pointHoverRadius: 6
-            }]
-        },
-        options: {
-            ...commonOptions,
-            scales: {
-                ...commonOptions.scales,
-                y: {
-                    ...commonOptions.scales.y,
-                    ticks: {
-                        color: '#94a3b8',
-                        stepSize: 50000,
-                        callback: function (value) {
-                            if (value >= 1000000) return '$' + (value / 1000000).toFixed(2) + 'M';
-                            if (value >= 1000) return '$' + (value / 1000).toFixed(0) + 'k';
-                            return '$' + value;
-                        }
-                    }
-                }
+        const netWorthChart = new Chart(netWorthCtx, {
+            type: 'line',
+            data: {
+                labels: nwData.monthly.labels,
+                datasets: [{
+                    label: 'Net Worth',
+                    data: nwData.monthly.data,
+                    borderColor: '#38bdf8',
+                    backgroundColor: gradient,
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#0f172a',
+                    pointBorderWidth: 2,
+                    pointRadius: 4,
+                    pointHoverRadius: 6
+                }]
             },
-            plugins: {
-                ...commonOptions.plugins,
-                tooltip: {
-                    callbacks: {
-                        label: function (context) {
-                            return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.raw);
+            options: {
+                ...commonOptions,
+                scales: {
+                    ...commonOptions.scales,
+                    y: {
+                        ...commonOptions.scales.y,
+                        ticks: {
+                            color: '#94a3b8',
+                            stepSize: 50000,
+                            callback: function (value) {
+                                if (value >= 1000000) return '$' + (value / 1000000).toFixed(2) + 'M';
+                                if (value >= 1000) return '$' + (value / 1000).toFixed(0) + 'k';
+                                return '$' + value;
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    ...commonOptions.plugins,
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.raw);
+                            }
                         }
                     }
                 }
-            }
-        }
-    });
-
-    // Toggle Logic
-    const toggleBtns = document.querySelectorAll('.toggle-btn');
-    toggleBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            // Remove active class from all
-            toggleBtns.forEach(b => b.classList.remove('active'));
-            // Add to clicked
-            btn.classList.add('active');
-
-            const period = btn.dataset.period;
-            const newData = nwData[period];
-
-            // Update Chart
-            netWorthChart.data.labels = newData.labels;
-            netWorthChart.data.datasets[0].data = newData.data;
-            netWorthChart.update();
-
-            // Update Text logic
-            // Note: In a real app this would calculate diffs dynamically. 
-            // For now we just keep the hardcoded header as requested or could update it.
-            // The user request implied the header shows "Current" status, which is usually constant for "Now", 
-            // but the "change" part might depend on the period context.
-            // Let's update the "time period" label at least.
-
-            // Only update the time label for now to keep it simple, or we could swap the "change" stats too.
-            // Let's sway the change stats to match the period for realism.
-
-            document.querySelector('.time-period-label').textContent = period === 'monthly' ? 'this month' : 'this year';
-
-            // Optional: Update the change values if we had different dummy data for annual change
-            if (period === 'annual') {
-                // Mock annual change
-                updateStats(nwData.annual.changeVal, nwData.annual.changePct);
-            } else {
-                updateStats(nwData.monthly.changeVal, nwData.monthly.changePct);
             }
         });
-    });
+
+        // Toggle Logic
+        const toggleBtns = document.querySelectorAll('.toggle-btn');
+        toggleBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all
+                toggleBtns.forEach(b => b.classList.remove('active'));
+                // Add to clicked
+                btn.classList.add('active');
+
+                const period = btn.dataset.period;
+                const newData = nwData[period];
+
+                // Update Chart
+                netWorthChart.data.labels = newData.labels;
+                netWorthChart.data.datasets[0].data = newData.data;
+                netWorthChart.update();
+
+                document.querySelector('.time-period-label').textContent = period === 'monthly' ? 'this month' : 'this year';
+
+                if (period === 'annual') {
+                    updateStats(nwData.annual.changeVal, nwData.annual.changePct);
+                } else {
+                    updateStats(nwData.monthly.changeVal, nwData.monthly.changePct);
+                }
+            });
+        });
+    }
 
     function updateStats(val, pct) {
-        document.getElementById('nwChangeValue').textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val);
-        document.getElementById('nwChangePercent').textContent = `(${pct}%)`;
+        const changeVal = document.getElementById('nwChangeValue');
+        const changePct = document.getElementById('nwChangePercent');
+        if (changeVal) changeVal.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val);
+        if (changePct) changePct.textContent = `(${pct}%)`;
     }
 
     // Spending Chart
-    const spendingCtx = document.getElementById('spendingChart').getContext('2d');
-    new Chart(spendingCtx, {
-        type: 'bar',
-        data: {
-            labels: ['Groceries', 'Rent', 'Dining', 'Transport', 'Utilities'],
-            datasets: [{
-                label: 'This Month',
-                data: [450, 1800, 320, 150, 200],
-                backgroundColor: [
-                    '#38bdf8',
-                    '#818cf8',
-                    '#c084fc',
-                    '#f472b6',
-                    '#2dd4bf'
-                ],
-                borderRadius: 4
-            }]
-        },
-        options: {
-            ...commonOptions,
-            plugins: {
-                legend: { display: false }
+    const spendingCanvas = document.getElementById('spendingChart');
+    if (spendingCanvas) {
+        const spendingCtx = spendingCanvas.getContext('2d');
+        new Chart(spendingCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Groceries', 'Rent', 'Dining', 'Transport', 'Utilities'],
+                datasets: [{
+                    label: 'This Month',
+                    data: [450, 1800, 320, 150, 200],
+                    backgroundColor: [
+                        '#38bdf8',
+                        '#818cf8',
+                        '#c084fc',
+                        '#f472b6',
+                        '#2dd4bf'
+                    ],
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                ...commonOptions,
+                plugins: {
+                    legend: { display: false }
+                }
             }
-        }
-    });
+        });
+    }
 }
 
 function loadTransactions() {
