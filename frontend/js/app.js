@@ -13,38 +13,12 @@ function initCashFlowSankey() {
         useDirtyRect: false
     });
 
-    const option = {
-        backgroundColor: 'transparent',
-        tooltip: {
-            trigger: 'item',
-            triggerOn: 'mousemove'
-        },
-        series: [{
-            type: 'sankey',
-            layout: 'none',
-            emphasis: {
-                focus: 'adjacency'
-            },
-            data: [
-                { name: 'Salary' },
-                { name: 'Freelance' },
-                { name: 'Dividends' },
-                { name: 'Total Income' },
-                { name: 'Rent' },
-                { name: 'Groceries' },
-                { name: 'Dining' },
-                { name: 'Transport' },
-                { name: 'Utilities' },
-                { name: 'Savings' },
-                { name: 'Investments' }
-            ],
+    const sankeyData = {
+        monthly: {
             links: [
-                // Income Sources -> Total Income
                 { source: 'Salary', target: 'Total Income', value: 8500 },
                 { source: 'Freelance', target: 'Total Income', value: 3200 },
                 { source: 'Dividends', target: 'Total Income', value: 800 },
-
-                // Total Income -> Expenses/Savings
                 { source: 'Total Income', target: 'Rent', value: 2500 },
                 { source: 'Total Income', target: 'Groceries', value: 600 },
                 { source: 'Total Income', target: 'Dining', value: 400 },
@@ -53,21 +27,92 @@ function initCashFlowSankey() {
                 { source: 'Total Income', target: 'Savings', value: 4500 },
                 { source: 'Total Income', target: 'Investments', value: 4000 }
             ],
-            lineStyle: {
-                color: 'gradient',
-                curveness: 0.5
-            },
-            label: {
-                color: '#e2e8f0',
-                fontFamily: 'Outfit',
-                fontSize: 14
-            }
-        }]
+            total: 12500
+        },
+        annual: {
+            links: [
+                { source: 'Salary', target: 'Total Income', value: 102000 },
+                { source: 'Freelance', target: 'Total Income', value: 38400 },
+                { source: 'Dividends', target: 'Total Income', value: 9600 },
+                { source: 'Total Income', target: 'Rent', value: 30000 },
+                { source: 'Total Income', target: 'Groceries', value: 7200 },
+                { source: 'Total Income', target: 'Dining', value: 4800 },
+                { source: 'Total Income', target: 'Transport', value: 3600 },
+                { source: 'Total Income', target: 'Utilities', value: 2400 },
+                { source: 'Total Income', target: 'Savings', value: 54000 },
+                { source: 'Total Income', target: 'Investments', value: 48000 }
+            ],
+            total: 150000
+        }
     };
 
-    myChart.setOption(option);
+    const commonNodes = [
+        { name: 'Salary' },
+        { name: 'Freelance' },
+        { name: 'Dividends' },
+        { name: 'Total Income' },
+        { name: 'Rent' },
+        { name: 'Groceries' },
+        { name: 'Dining' },
+        { name: 'Transport' },
+        { name: 'Utilities' },
+        { name: 'Savings' },
+        { name: 'Investments' }
+    ];
+
+    function getOption(period) {
+        const data = sankeyData[period];
+        return {
+            backgroundColor: 'transparent',
+            tooltip: {
+                trigger: 'item',
+                triggerOn: 'mousemove'
+            },
+            series: [{
+                type: 'sankey',
+                layout: 'none',
+                emphasis: { focus: 'adjacency' },
+                data: commonNodes,
+                links: data.links,
+                lineStyle: { color: 'gradient', curveness: 0.5 },
+                label: {
+                    color: '#e2e8f0',
+                    fontFamily: 'Outfit',
+                    fontSize: 14,
+                    formatter: function (params) {
+                        const value = params.value;
+                        const name = params.name;
+                        const formattedValue = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(value);
+
+                        if (name === 'Total Income') {
+                            return `${name}\n${formattedValue}`;
+                        }
+
+                        const percent = ((value / data.total) * 100).toFixed(1);
+                        return `${name}\n${formattedValue} (${percent}%)`;
+                    }
+                }
+            }]
+        };
+    }
+
+    myChart.setOption(getOption('monthly'));
 
     window.addEventListener('resize', myChart.resize);
+
+    // Toggle Logic inside the same container scope if buttons exist
+    const container = document.querySelector('.card-header');
+    if (container) {
+        const toggles = container.querySelectorAll('.toggle-btn');
+        toggles.forEach(btn => {
+            btn.addEventListener('click', () => {
+                toggles.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const period = btn.dataset.period;
+                myChart.setOption(getOption(period));
+            });
+        });
+    }
 }
 
 function initCharts() {
