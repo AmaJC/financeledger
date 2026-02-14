@@ -32,17 +32,17 @@ function initCharts() {
     const nwData = {
         monthly: {
             labels: ['Sep 2025', 'Oct 2025', 'Nov 2025', 'Dec 2025', 'Jan 2026', 'Feb 2026'],
-            data: [1120000, 1135000, 1138000, 1150000, 1140000, 1162500],
-            current: 1162500.32,
-            changeVal: 22500.32,
-            changePct: 1.97
+            data: [952123.45, 948567.89, 1012345.12, 1085432.76, 1065234.56, 1198432.42],
+            current: 1198432.42,
+            changeVal: 133197.86, // Feb - Jan change
+            changePct: 12.50
         },
         annual: {
             labels: ['2021', '2022', '2023', '2024', '2025', '2026 (YTD)'],
-            data: [850000, 920000, 980000, 1050000, 1150000, 1162500],
-            current: 1162500.32,
-            changeVal: 12500.32,
-            changePct: 1.09 // YTD change logic simplified
+            data: [854200.12, 921500.45, 982100.32, 1054300.78, 1152100.90, 1198432.42],
+            current: 1198432.42,
+            changeVal: 46331.52,
+            changePct: 4.02
         }
     };
 
@@ -80,8 +80,9 @@ function initCharts() {
                     ...commonOptions.scales.y,
                     ticks: {
                         color: '#94a3b8',
+                        stepSize: 50000,
                         callback: function (value) {
-                            if (value >= 1000000) return '$' + (value / 1000000).toFixed(1) + 'M';
+                            if (value >= 1000000) return '$' + (value / 1000000).toFixed(2) + 'M';
                             if (value >= 1000) return '$' + (value / 1000).toFixed(0) + 'k';
                             return '$' + value;
                         }
